@@ -27,6 +27,10 @@ import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.TipoItem;
+import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerImpl;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerItemsStub;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -64,6 +68,7 @@ public class MyBatisExample {
      * @throws SQLException 
      */
     public static void main(String args[]) throws SQLException {
+        /*
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
@@ -82,14 +87,42 @@ public class MyBatisExample {
         //System.out.println(im.consultarItems());
         //System.out.println(im.consultarItem(1));
 
+
+
+
         
         sqlss.commit();
         
         
-        sqlss.close();
+        sqlss.close();*/
 
-        
-        
+        //prueba stub
+
+
+        /*ServiciosAlquiler serv = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerStub();
+        try {
+            System.out.println(serv.consultarClientes());
+        }
+        catch (Exception ex) {
+            System.out.println("se jodió");
+        }*/
+        /*ServiciosAlquiler pruebaStub = new ServiciosAlquilerItemsStub();
+        try {
+            System.out.println(pruebaStub.consultarClientes());
+        }
+        catch (Exception ex) {
+            System.out.println("se jodió");
+        }*/
+
+        //prueba ServicioAlquilerImpl
+        ServiciosAlquiler servicioAlq = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
+        try {
+            System.out.println(servicioAlq.consultarItem(2));
+        }
+        catch (Exception ex) {
+            System.out.println("se jodió");
+        }
+
     }
 
 
