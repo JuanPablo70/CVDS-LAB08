@@ -3,6 +3,7 @@ package edu.eci.cvds.samples.services.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 //import edu.eci.cvds.sampleprj.dao.ClienteDAO;
+import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
 //import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.samples.entities.Cliente;
@@ -21,24 +22,39 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Inject
     private ItemDAO itemDAO;
 
+    @Inject
+    private ClienteDAO clienteDAO;
+
     @Override
     public int valorMultaRetrasoxDia(int itemId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {//
+        try {
+            return clienteDAO.load(docu);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar el cliente " + docu, ex);
+        }
     }
 
     @Override
-    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {//
+        try {
+            return clienteDAO.loadItemsCliente(idcliente);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar rentados del cliente " + idcliente, ex);
+        }
     }
 
     @Override
-    public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {//
+        try {
+            return clienteDAO.loadAll();
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar los clientes", ex);
+        }
     }
 
     @Override
@@ -73,13 +89,17 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
+    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {//
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void registrarCliente(Cliente c) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void registrarCliente(Cliente c) throws ExcepcionServiciosAlquiler {//
+        try {
+            clienteDAO.save(c);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al registrar el cliente " + c.toString(), ex);
+        }
     }
 
     @Override
@@ -94,7 +114,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al actualizar el item " + id, ex);
         }
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -103,8 +123,10 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public void vetarCliente(long docu, boolean estado) throws
-            ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {//
+        try {
+            clienteDAO.update(docu, estado);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al actualizar el cliente " + docu, ex);
+        }    }
 }
