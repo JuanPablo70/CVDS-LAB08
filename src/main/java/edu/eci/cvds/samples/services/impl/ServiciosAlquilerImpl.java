@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
 //import edu.eci.cvds.sampleprj.dao.PersistenceException;
+import edu.eci.cvds.sampleprj.dao.TipoItemDAO;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
@@ -21,6 +22,8 @@ import java.util.List;
 public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Inject
     private ItemDAO itemDAO;
+    @Inject
+    private TipoItemDAO tipoItemDAO;
 
     @Inject
     private ClienteDAO clienteDAO;
@@ -67,8 +70,12 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public List<Item> consultarItemsDisponibles() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Item> consultarItemsDisponibles() throws ExcepcionServiciosAlquiler {
+        try {
+            return itemDAO.loadAll();
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar los items disponibles " + ex);
+        }
     }
 
     @Override
@@ -78,14 +85,21 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public TipoItem consultarTipoItem(int id) throws
-            ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
+        try {
+            return tipoItemDAO.load(id);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar el tipo item " + id, ex);
+        }
     }
 
     @Override
     public List<TipoItem> consultarTiposItem() throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            return tipoItemDAO.loadAll();
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar los tipos items " + ex);
+        }
     }
 
     @Override
@@ -104,7 +118,11 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Override
     public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            return itemDAO.loadRentalCost(iditem, numdias);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar el costo por dias del item " + iditem, ex);
+        }
     }
 
     @Override
@@ -119,7 +137,12 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            itemDAO.save(i);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al registrar el item " + i, ex);
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
