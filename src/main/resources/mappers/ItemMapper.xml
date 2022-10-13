@@ -33,6 +33,10 @@
         from VI_ITEMS as i
         where i.id = #{idit}
     </select>
+    
+    <update id="actualizarItem" parameterType="map">
+        update VI_ITEMS set tarifaxdia = #{tarxdia} where id = #{idit}
+    </update>
 
     <resultMap id="ItemResult" type="Item">
         <id property="id" column="i_id" />

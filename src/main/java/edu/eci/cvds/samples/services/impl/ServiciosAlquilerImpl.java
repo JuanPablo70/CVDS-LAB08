@@ -89,6 +89,11 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
+        try {
+            itemDAO.update(id, tarifa);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al actualizar el item " + id, ex);
+        }
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

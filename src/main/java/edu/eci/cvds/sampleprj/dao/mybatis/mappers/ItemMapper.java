@@ -20,5 +20,7 @@ public interface ItemMapper {
     
     public void insertarItem(@Param("item") Item it);
 
+    public void actualizarItem(@Param("idit") int id, @Param("tarxdia") long tarxdia);
+
         
 }
