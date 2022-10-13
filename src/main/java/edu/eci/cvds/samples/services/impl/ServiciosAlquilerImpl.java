@@ -16,12 +16,14 @@ import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import org.apache.ibatis.exceptions.PersistenceException;
 
 import java.sql.Date;
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Singleton
 public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Inject
     private ItemDAO itemDAO;
+
     @Inject
     private TipoItemDAO tipoItemDAO;
 
@@ -34,7 +36,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {//
+    public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {
         try {
             return clienteDAO.load(docu);
         } catch (PersistenceException ex) {
@@ -132,7 +134,6 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al actualizar el item " + id, ex);
         }
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -142,7 +143,6 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al registrar el item " + i, ex);
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -25,12 +25,16 @@ import java.sql.SQLException;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.TipoItem;
+import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
 import edu.eci.cvds.samples.services.impl.ServiciosAlquilerImpl;
 import edu.eci.cvds.samples.services.impl.ServiciosAlquilerItemsStub;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -67,38 +71,42 @@ public class MyBatisExample {
      * @param args
      * @throws SQLException 
      */
-    public static void main(String args[]) throws SQLException {
-        /*
+    public static void main(String args[]) throws SQLException, ExcepcionServiciosAlquiler {
+
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
 
-        
+
         //Crear el mapper y usarlo: 
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
+        Cliente cliente = new Cliente("pupito", 1236969, "1236969", "cra 123", "pupito@gmail.com");
         //System.out.println(cm.consultarClientes());
         //System.out.println(cm.consultarCliente(1));
         //cm.agregarItemRentadoACliente(3, 3, Date.valueOf("2022-10-02"), Date.valueOf("2022-10-05"));
 
         ItemMapper im = sqlss.getMapper(ItemMapper.class);
-        TipoItem tipo = new TipoItem(2, "Accion");
-        Item item = new Item(tipo, 639, "Pupito", "Pupito", Date.valueOf("2022-10-02"), 639639, "Pupito", "Pupito");
+        //TipoItem tipo = new TipoItem(2, "Accion");
+        //Item item = new Item(tipo, 639, "Pupito", "Pupito", Date.valueOf("2022-10-02"), 639639, "Pupito", "Pupito");
         //im.insertarItem(item);
         //System.out.println(im.consultarItems());
         //System.out.println(im.consultarItem(1));
+        //System.out.println(im.costoAlquilerItem(2, 2));
+        //im.actualizarItem(2, 6000);
+
+        TipoItemMapper tim = sqlss.getMapper(TipoItemMapper.class);
+        //System.out.println(tim.getTiposItems());
+        //System.out.println(tim.getTipoItem(2));
 
 
 
 
-        
+
+
         sqlss.commit();
-        
-        
-        sqlss.close();*/
+        sqlss.close();
 
         //prueba stub
-
-
         /*ServiciosAlquiler serv = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerStub();
         try {
             System.out.println(serv.consultarClientes());
@@ -106,22 +114,37 @@ public class MyBatisExample {
         catch (Exception ex) {
             System.out.println("se jodió");
         }*/
-        /*ServiciosAlquiler pruebaStub = new ServiciosAlquilerItemsStub();
-        try {
-            System.out.println(pruebaStub.consultarClientes());
-        }
-        catch (Exception ex) {
-            System.out.println("se jodió");
-        }*/
 
-        //prueba ServicioAlquilerImpl
+
+        // Prueba ServicioAlquilerImpl
+
         ServiciosAlquiler servicioAlq = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
         try {
-            System.out.println(servicioAlq.consultarItem(2));
+            // Cliente
+            System.out.println(servicioAlq.consultarCliente(3));
+            System.out.println(servicioAlq.consultarItemsCliente(3).size());
+            //System.out.println(servicioAlq.consultarClientes());
+            //servicioAlq.registrarCliente(cliente);
+            //servicioAlq.vetarCliente(1236969, true);
+
+
+            // Item
+            //System.out.println(servicioAlq.consultarItemsDisponibles());
+            //System.out.println(servicioAlq.consultarItem(2));
+            //System.out.println(servicioAlq.consultarCostoAlquiler(2, 2));
+            //servicioAlq.actualizarTarifaItem(2, 5000);
+            //servicioAlq.registrarItem(item);
+
+            // TipoItem
+            //System.out.println(servicioAlq.consultarTiposItem());
+            //System.out.println(servicioAlq.consultarTipoItem(1));
+
+
         }
         catch (Exception ex) {
-            System.out.println("se jodió");
+            System.out.println(ex.getMessage());
         }
+
 
     }
 
