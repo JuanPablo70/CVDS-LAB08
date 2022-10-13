@@ -38,7 +38,7 @@
         update VI_ITEMS set tarifaxdia = #{tarxdia} where id = #{idit}
     </update>
 
-    <select id="costoAlquilerItem" resultMap="ItemResult" parameterType="map">
+    <select id="costoAlquilerItem" resultType="long" parameterType="map">
         select tarifaxdia * #{dias} from VI_ITEMS where id = #{idit}
     </select>
 
