@@ -8,7 +8,7 @@
         select
         ti.id as ti_id,
         ti.descripcion as ti_descripcion
-        from VI_TIPOTIEM as ti
+        from VI_TIPOITEM as ti
         where ti.id = #{idti}
     </select>
 
@@ -16,7 +16,7 @@
         select
         ti.id as ti_id,
         ti.descripcion as ti_descripcion
-        from VI_TIPOTIEM as ti
+        from VI_TIPOITEM as ti
     </select>
 
     <resultMap id="TipoItemResult" type="TipoItem">
