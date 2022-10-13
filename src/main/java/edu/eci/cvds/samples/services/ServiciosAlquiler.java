@@ -24,7 +24,7 @@ public interface ServiciosAlquiler {
      * @return el listado de items disponibles
      */
     public abstract List < Item >
-    consultarItemsDisponibles();
+    consultarItemsDisponibles() throws ExcepcionServiciosAlquiler;
     /**
      * @obj consultar el valor de la multa del alquiler, dado el id del item
      * alquilado hasta la fecha dada como parametro
