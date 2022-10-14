@@ -22,6 +22,7 @@ public interface ItemMapper {
 
     public void actualizarItem(@Param("idit") int id, @Param("tarxdia") long tarxdia);
     public long costoAlquilerItem(@Param("idit") int iditem, @Param("dias") int numdias);
+    public int consultarAlquilerxDia(@Param("idit") int id);
 
         
 }

@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.List;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 public interface ServiciosAlquiler {
-    public abstract int valorMultaRetrasoxDia(int itemId);
+    public abstract int valorMultaRetrasoxDia(int itemId) throws ExcepcionServiciosAlquiler;
     public abstract Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler;
     /**
      * @obj Consultar los items que tenga en su poder un cliente

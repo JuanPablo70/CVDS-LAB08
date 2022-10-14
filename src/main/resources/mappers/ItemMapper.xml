@@ -42,6 +42,10 @@
         select tarifaxdia * #{dias} from VI_ITEMS where id = #{idit}
     </select>
 
+    <select id="consultarAlquilerxDia" resultType="int" parameterType="map">
+        select tarifaxdia from VI_ITEMS where id = #{idit}
+    </select>
+
     <resultMap id="ItemResult" type="Item">
         <id property="id" column="i_id" />
         <result property="nombre" column="i_nombre" />

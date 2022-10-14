@@ -10,4 +10,5 @@ public interface ItemDAO {
 	public void update(int id, long tarifaxdia) throws PersistenceException;
 	public long loadRentalCost(int id, int numdias) throws PersistenceException;
 	public List<Item> loadAll() throws PersistenceException;
+	public int loadItemRentalCostxDay(int id) throws PersistenceException;
 }
