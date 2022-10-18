@@ -15,7 +15,7 @@
         <h:form id="clientes">
             <h1>Clientes</h1>
             <p:dataTable var="cliente" value="#{AlquilerItemsBean.getClientes()}" rows="10"
-                         paginator="true" paginatorPosition="both"
+                         paginator="true" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                          rowsPerPageTemplate="5,10,{ShowAll|'All'}">
@@ -55,7 +55,7 @@
                 </p:column>
             </p:dataTable>
 
-            <h2>Registrar Cliente</h2>
+            <h1>Registrar Cliente</h1>
             <div>
                 <p:outputLabel for="Nombre" value="Nombre" /><br/>
                 <p:inputText id="Nombre" type="String" value="#{nom}" /><br/><br/>
