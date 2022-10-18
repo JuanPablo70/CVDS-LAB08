@@ -86,8 +86,8 @@ public class MyBatisExample {
         //cm.agregarItemRentadoACliente(3, 3, Date.valueOf("2022-10-02"), Date.valueOf("2022-10-05"));
 
         ItemMapper im = sqlss.getMapper(ItemMapper.class);
-        //TipoItem tipo = new TipoItem(2, "Accion");
-        //Item item = new Item(tipo, 639, "Pupito", "Pupito", Date.valueOf("2022-10-02"), 639639, "Pupito", "Pupito");
+        TipoItem tipo = new TipoItem(2, "Accion");
+        Item item = new Item(tipo, 639, "Pupito", "Pupito", Date.valueOf("2022-10-02"), 639639, "Pupito", "Pupito");
         //im.insertarItem(item);
         //System.out.println(im.consultarItems());
         //System.out.println(im.consultarItem(1));
@@ -121,8 +121,8 @@ public class MyBatisExample {
         ServiciosAlquiler servicioAlq = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
         try {
             // Cliente
-            System.out.println(servicioAlq.consultarCliente(3));
-            System.out.println(servicioAlq.consultarItemsCliente(3).size());
+            //System.out.println(servicioAlq.consultarCliente(3));
+            //System.out.println(servicioAlq.consultarItemsCliente(3));
             //System.out.println(servicioAlq.consultarClientes());
             //servicioAlq.registrarCliente(cliente);
             //servicioAlq.vetarCliente(1236969, true);
@@ -138,6 +138,10 @@ public class MyBatisExample {
             // TipoItem
             //System.out.println(servicioAlq.consultarTiposItem());
             //System.out.println(servicioAlq.consultarTipoItem(1));
+
+            // ItemRentado
+            //System.out.println(servicioAlq.consultarMultaAlquiler(1, Date.valueOf("2022-10-18")));
+            //servicioAlq.registrarAlquilerCliente(Date.valueOf("2022-10-18"), 1236969, item, 2);
 
 
         }
