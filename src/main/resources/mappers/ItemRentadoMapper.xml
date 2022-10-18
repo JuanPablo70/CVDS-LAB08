@@ -11,7 +11,7 @@
         ir.CLIENTES_documento as ir_clidoc,
         ir.ITEMS_id as ir_iditem,
         ir.fechainiciorenta as ir_fechaini,
-        ir.fechafinrenta as ir_fechafin,
+        ir.fechafinrenta as ir_fechafin
         from VI_ITEMRENTADO as ir
     </select>
 
@@ -21,18 +21,55 @@
         ir.CLIENTES_documento as ir_clidoc,
         ir.ITEMS_id as ir_iditem,
         ir.fechainiciorenta as ir_fechaini,
-        ir.fechafinrenta as ir_fechafin,
+        ir.fechafinrenta as ir_fechafin
         from VI_ITEMRENTADO as ir
         where ir.id = #{idIr}
     </select>
 
-    <resultMap id="ItemRentadoResult" type="Item">
+    <select id="consultarItemRentadosCli" resultMap="ItemRentadoResult" parameterType="map">
+        select
+        ir.id as ir_id,
+        ir.CLIENTES_documento as ir_clidoc,
+        ir.ITEMS_id as ir_iditem,
+        ir.fechainiciorenta as ir_fechaini,
+        ir.fechafinrenta as ir_fechafin,
+        i.id as i_id,
+        i.nombre as i_nombre,
+        i.descripcion as i_descripcion,
+        i.fechalanzamiento as i_fechalanzamiento,
+        i.tarifaxdia as i_tarifaxdia,
+        i.formatorenta as i_formatorenta,
+        i.genero as i_genero
+        from VI_ITEMRENTADO as ir JOIN VI_ITEMS i on ir.ITEMS_id = i.id
+        where ir.CLIENTES_documento = #{idcli}
+    </select>
+
+    <select id="consultarMultaRentado" resultType="long" parameterType="map">
+        SELECT CASE  WHEN (5000 * DATEDIFF(#{fDev}, ir.fechafinrenta) > 0)
+        THEN (5000 * DATEDIFF(#{fDev}, ir.fechafinrenta))
+        ELSE 0 END
+        FROM VI_ITEMRENTADO ir
+        WHERE ir.id = #{idIt}
+    </select>
+
+    <insert id="registrarAlquiler" parameterType="map">
+        insert into VI_ITEMRENTADO (CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta)
+        values (#{docu}, #{item.id}, #{date}, date_add(curdate(), interval #{numdias} day))
+    </insert>
+
+    <resultMap id="ItemRentadoResult" type="ItemRentado">
         <id property="id" column="ir_id" />
-        <result property="" column="ir_clidoc" />
-        <result property="" column="ir_iditem" />
-        <result property="fechaLanzamiento" column="ir_fechaini" />
-        <result property="formatoRenta" column="ir_fechafin" />
-        <association property="item" javaType="Item" resultMap="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult"/>
+        <result property="fechainiciorenta" column="ir_fechaini" />
+        <result property="fechafinrenta" column="ir_fechafin" />
+        <association property="item" javaType="Item" resultMap="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper.ItemResult">
+            <id property="id" column="i_id" />
+            <result property="nombre" column="i_nombre" />
+            <result property="descripcion" column="i_descripcion" />
+            <result property="fechaLanzamiento" column="i_fechaLanzamiento" />
+            <result property="tarifaxDia" column="i_tarifaxDia" />
+            <result property="formatoRenta" column="i_formatoRenta" />
+            <result property="genero" column="i_genero" />
+        </association>
 
     </resultMap>
 

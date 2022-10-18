@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
 //import edu.eci.cvds.sampleprj.dao.PersistenceException;
+import edu.eci.cvds.sampleprj.dao.ItemRentadoDAO;
 import edu.eci.cvds.sampleprj.dao.TipoItemDAO;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
@@ -30,6 +31,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Inject
     private ClienteDAO clienteDAO;
 
+    @Inject
+    private ItemRentadoDAO itemRentadoDAO;
+
     @Override
     public int valorMultaRetrasoxDia(int itemId) throws ExcepcionServiciosAlquiler {
         try {
@@ -51,7 +55,8 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     @Override
     public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {//
         try {
-            return clienteDAO.loadItemsCliente(idcliente);
+            //return clienteDAO.loadItemsCliente(idcliente);
+            return itemRentadoDAO.loadAlquileres(idcliente);
         } catch (PersistenceException ex) {
             throw new ExcepcionServiciosAlquiler("Error al consultar rentados del cliente " + idcliente, ex);
         }
@@ -85,9 +90,12 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
     }
 
     @Override
-    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws
-            ExcepcionServiciosAlquiler {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
+        try {
+            return itemRentadoDAO.loadMulta(iditem, fechaDevolucion);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al consultar los multa de item rentado " + iditem, ex);
+        }
     }
 
     @Override
@@ -110,7 +118,11 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
     @Override
     public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {//
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            itemRentadoDAO.saveAlquiler(date, docu, item, numdias);
+        } catch (PersistenceException ex) {
+            throw new ExcepcionServiciosAlquiler("Error al registrar el item rentado del cliente " + docu + ex);
+        }
     }
 
     @Override
