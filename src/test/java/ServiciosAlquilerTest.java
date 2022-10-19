@@ -45,7 +45,9 @@ public class ServiciosAlquilerTest {
 
     @Test
     public void deberiaVetarCliente() {
+        Cliente cliente = new Cliente("pupito", 1236969, "1236969", "cra 123", "pupito@gmail.com");
         try {
+            serviciosAlquiler.registrarCliente(cliente);
             serviciosAlquiler.vetarCliente(1236969, true);
             Assert.assertTrue(serviciosAlquiler.consultarCliente(1236969).isVetado());
         } catch (ExcepcionServiciosAlquiler e) {
